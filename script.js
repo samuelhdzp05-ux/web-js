@@ -1,4 +1,4 @@
-// ===== Referencias al DOM =====
+// Referencias al DOM 
 const formulario = document.getElementById("formulario");
 const buscador = document.getElementById("buscador");
 const tabla = document.getElementById("tabla");
@@ -12,12 +12,12 @@ let usuarios = [];
 // Id del usuario que se está editando (null si se está agregando)
 let idEditando = null;
 
-// ===== Mensajes =====
+// Mensajes 
 const mostrarMensaje = (texto) => {
   mensaje.textContent = texto;
 };
 
-// ===== Dibujar la tabla con la lista recibida =====
+// Dibujar la tabla con la lista recibida 
 const dibujarTabla = (lista) => {
   tabla.innerHTML = "";
 
@@ -47,7 +47,7 @@ const actualizarLista = () => {
   contarPorCiudad();
 };
 
-// ===== Bucle: cuenta cuántos usuarios hay por ciudad (se muestra en consola) =====
+//  Bucle: cuenta cuántos usuarios hay por ciudad (se muestra en consola) 
 const contarPorCiudad = () => {
   const conteo = {};
   for (const { ciudad } of usuarios) {
@@ -56,7 +56,7 @@ const contarPorCiudad = () => {
   console.log("Usuarios por ciudad:", conteo);
 };
 
-// ===== Cargar usuarios desde la API =====
+//  Cargar usuarios desde la API
 const cargarUsuarios = async () => {
   mostrarMensaje("Cargando...");
   try {
@@ -78,7 +78,7 @@ const cargarUsuarios = async () => {
   }
 };
 
-// ===== Validar el formulario: devuelve un código de resultado =====
+//  Validar el formulario: devuelve un código de resultado 
 const validar = ({ id, nombre, correo, ciudad }) => {
   if (id === "" || nombre === "" || correo === "" || ciudad === "") return "vacio";
   if (isNaN(id)) return "idNoNumero";
@@ -88,7 +88,7 @@ const validar = ({ id, nombre, correo, ciudad }) => {
   return "ok";
 };
 
-// ===== Enviar formulario (agregar o modificar) =====
+//  Enviar formulario (agregar o modificar) 
 formulario.addEventListener("submit", (event) => {
   event.preventDefault();
 
@@ -138,14 +138,14 @@ formulario.addEventListener("submit", (event) => {
   actualizarLista();
 });
 
-// ===== Búsqueda en vivo con filter (no modifica el array original) =====
+// Búsqueda en vivo con filter (no modifica el array original) 
 buscador.addEventListener("input", () => {
   const texto = buscador.value.toLowerCase();
   const filtrados = usuarios.filter((u) => u.nombre.toLowerCase().includes(texto));
   dibujarTabla(filtrados);
 });
 
-// ===== Editar y Eliminar (delegación de eventos sobre el tbody) =====
+//  Editar y Eliminar (delegación de eventos sobre el tbody) 
 tabla.addEventListener("click", (event) => {
   const id = Number(event.target.dataset.id);
 
@@ -169,5 +169,5 @@ tabla.addEventListener("click", (event) => {
   }
 });
 
-// ===== Inicio =====
+//  Inicio 
 cargarUsuarios();
