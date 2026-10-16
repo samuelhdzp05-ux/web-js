@@ -2,59 +2,75 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Panel de Gestión de Usuarios</title>
-  <link rel="stylesheet" href="estilos.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>H.D.D. // Panel de Control de Proxies</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main>
-    <h1>Panel de Gestión de Usuarios</h1>
+*/ /*
+  <div class="scanlines"></div>
 
+  <main class="contenedor">
+    <header class="header-zzz">
+      <span class="tag-sistema">SYSTEM // H.D.D. VER. 2.0</span>
+      <h1>PANEL DE GESTIÓN DE USUARIOS</h1>
+    </header>
 
-    <p id="mensaje"></p>
+    <section class="seccion-formulario">
+      <h2>REGISTRO DE NUEVO CIUDADANO / PROXY</h2>
+      <form id="formulario">
+        <div class="grupo-input">
+          <label for="id">ID DE ACCESO:</label>
+          <input type="text" id="id" placeholder="Ej. 101" required>
+        </div>
 
+        <div class="grupo-input">
+          <label for="nombre">NOMBRE / CÓDIGO:</label>
+          <input type="text" id="nombre" placeholder="Ej. Wise / Belle" required>
+        </div>
 
-    <form id="formulario">
-      <div>
-        <label for="id">Id</label>
-        <input type="text" id="id">
+        <div class="grupo-input">
+          <label for="correo">CORREO (H.D.D.):</label>
+          <input type="email" id="correo" placeholder="usuario@proxy.net" required>
+        </div>
+
+        <div class="grupo-input">
+          <label for="ciudad">ZONA / DISTRITO:</label>
+          <input type="text" id="ciudad" placeholder="Ej. New Eridu" required>
+        </div>
+
+        <button type="submit" id="boton">REGISTRAR</button>
+      </form>
+    </section>
+
+    <p id="mensaje" class="mensaje"></p>
+
+    <section class="seccion-tabla">
+      <div class="buscador-container">
+        <label for="buscador">BUSCAR AGENTE:</label>
+        <input type="text" id="buscador" placeholder="Filtrar por nombre...">
       </div>
-      <div>
-        <label for="nombre">Nombre</label>
-        <input type="text" id="nombre">
+
+      <div class="tabla-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>NOMBRE / CÓDIGO</th>
+              <th>CORREO (H.D.D.)</th>
+              <th>ZONA</th>
+              <th>ACCIONES</th>
+            </tr>
+          </thead>
+          <tbody id="tabla">
+          </tbody>
+        </table>
       </div>
-      <div>
-        <label for="correo">Correo</label>
-        <input type="text" id="correo">
-      </div>
-      <div>
-        <label for="ciudad">Ciudad</label>
-        <input type="text" id="ciudad">
-      </div>
-      <button type="submit" id="boton">Agregar</button>
-    </form>
-
-
-    <label for="buscador">Buscar por nombre</label>
-    <input type="text" id="buscador" placeholder="Escribe un nombre...">
-
-
-    <div class="tabla-contenedor">
-      <table>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Correo</th>
-            <th>Ciudad</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody id="tabla"></tbody>
-      </table>
-    </div>
+    </section>
   </main>
 
   <script src="script.js"></script>
 </body>
 </html>
+
+el html
