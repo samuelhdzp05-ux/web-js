@@ -1,97 +1,286 @@
+/* Samuel Hernández y Diego Tovar*/
+:root {
+  --bg-core: #090b10;
+  --bg-panel: #121622;
+  --bg-input: #07090e;
+  --neon-cyan: #00f0ff;
+  --neon-orange: #ff5500;
+  --texto-main: #f0f4f8;
+  --texto-muted: #8c9bb2;
+  --borde-tech: #1f283d;
+  --borde-focus: #00f0ff;
+  --btn-editar: #f59e0b;
+  --btn-eliminar: #ef4444;
+}
+
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(rgba(18, 22, 34, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  background-size: 100% 4px;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.4;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #f4f6f8;
-  color: #222;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-core);
+  color: var(--texto-main);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem 1rem;
 }
 
-main {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 16px;
+.contenedor {
+  width: 100%;
+  max-width: 1200px;
+  background-color: var(--bg-panel);
+  border: 2px solid var(--borde-tech);
+  padding: 2rem;
+  border-radius: 4px; /* Estilo industrial / angular */
+  box-shadow: 0 10px 30px rgba(0, 240, 255, 0.05);
+  position: relative;
 }
 
-/* Formulario con Grid: 2 columnas en pantallas medianas y grandes */
-#formulario {
+.contenedor::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 20px;
+  height: 20px;
+  border-top: 4px solid var(--neon-cyan);
+  border-right: 4px solid var(--neon-cyan);
+}
+
+.header-zzz {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.tag-sistema {
+  display: inline-block;
+  background-color: var(--neon-orange);
+  color: #000;
+  font-weight: 800;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+  transform: skewX(-10deg);
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: var(--texto-main);
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--neon-cyan);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.seccion-formulario, .seccion-tabla {
+  background-color: rgba(7, 9, 14, 0.8);
+  padding: 1.5rem;
+  border: 1px solid var(--borde-tech);
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+form {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 20px;
+  grid-template-columns: 1fr;
+  gap: 1.2rem;
 }
 
-#formulario div {
+.grupo-input {
   display: flex;
   flex-direction: column;
 }
 
-input {
-  padding: 8px;
-  border: 1px solid #aaa;
-  border-radius: 4px;
+label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  font-size: 0.8rem;
+  color: var(--texto-muted);
+  letter-spacing: 0.5px;
 }
 
-input:disabled {
-  background: #ddd;
+input {
+  padding: 0.75rem 1rem;
+  background-color: var(--bg-input);
+  border: 1px solid var(--borde-tech);
+  border-radius: 2px;
+  color: var(--texto-main);
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+input:focus {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
 }
 
 button {
-  padding: 8px 12px;
+  padding: 0.75rem 1.2rem;
+  background-color: var(--neon-cyan);
+  color: #000;
   border: none;
-  border-radius: 4px;
-  background: #2563eb;
-  color: white;
+  border-radius: 2px;
+  font-size: 0.95rem;
+  font-weight: 800;
   cursor: pointer;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
 }
 
-#buscador {
+button:hover {
+  background-color: #fff;
+  box-shadow: 0 0 12px var(--neon-cyan);
+}
+
+.mensaje {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  min-height: 1.5rem;
+  color: var(--neon-orange);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+}
+
+.buscador-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+}
+
+.tabla-responsive {
   width: 100%;
-  margin: 4px 0 16px;
-}
-
-#mensaje {
-  min-height: 24px;
-  font-weight: bold;
-}
-
-/* La tabla se desplaza dentro de su contenedor, no la página */
-.tabla-contenedor {
   overflow-x: auto;
+  border: 1px solid var(--borde-tech);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
+  text-align: left;
+  min-width: 650px;
 }
 
 th, td {
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
-  text-align: left;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--borde-tech);
+  font-size: 0.9rem;
 }
 
 th {
-  background: #e5e9f0;
+  background-color: #07090e;
+  color: var(--neon-cyan);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
 }
 
-.eliminar {
-  background: #dc2626;
+tbody tr {
+  transition: background-color 0.15s ease;
 }
 
-/* Celular: formulario en 1 columna */
-@media (max-width: 600px) {
-  #formulario {
-    grid-template-columns: 1fr;
+tbody tr:hover {
+  background-color: rgba(0, 240, 255, 0.03);
+}
+
+td button {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.75rem;
+  margin-right: 0.3rem;
+}
+
+td button.editar {
+  background-color: var(--btn-editar);
+  color: #000;
+}
+
+td button.editar:hover {
+  background-color: #fff;
+  box-shadow: 0 0 8px var(--btn-editar);
+}
+
+td button.eliminar {
+  background-color: var(--btn-eliminar);
+  color: #fff;
+}
+
+td button.eliminar:hover {
+  background-color: #fff;
+  color: var(--btn-eliminar);
+  box-shadow: 0 0 8px var(--btn-eliminar);
+}
+
+@media (min-width: 768px) {
+  form {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .buscador-container {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .buscador-container label {
+    margin-bottom: 0;
+    white-space: nowrap;
+  }
+
+  .buscador-container input {
+    flex: 1;
   }
 }
 
-/* Pantallas grandes: más espacio */
-@media (min-width: 1024px) {
-  main {
-    padding: 32px;
+@media (min-width: 1280px) {
+  .contenedor {
+    padding: 2.5rem;
+  }
+  
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: center;
+  }
+
+  .grupo-input {
+    flex: 1 1 22%;
+  }
+
+  form button {
+    flex: 0 0 30%;
+    margin-top: 0.5rem;
   }
 }
