@@ -1,0 +1,97 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f6f8;
+  color: #222;
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* Formulario con Grid: 2 columnas en pantallas medianas y grandes */
+#formulario {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+#formulario div {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  padding: 8px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+input:disabled {
+  background: #ddd;
+}
+
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+#buscador {
+  width: 100%;
+  margin: 4px 0 16px;
+}
+
+#mensaje {
+  min-height: 24px;
+  font-weight: bold;
+}
+
+/* La tabla se desplaza dentro de su contenedor, no la página */
+.tabla-contenedor {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+th, td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background: #e5e9f0;
+}
+
+.eliminar {
+  background: #dc2626;
+}
+
+/* Celular: formulario en 1 columna */
+@media (max-width: 600px) {
+  #formulario {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Pantallas grandes: más espacio */
+@media (min-width: 1024px) {
+  main {
+    padding: 32px;
+  }
+}

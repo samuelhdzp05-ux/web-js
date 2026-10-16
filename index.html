@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel de Gestión de Usuarios</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <main>
+    <h1>Panel de Gestión de Usuarios</h1>
+
+    <!-- Mensajes de estado: cargando, errores y confirmaciones -->
+    <p id="mensaje"></p>
+
+    <!-- Formulario para agregar o modificar -->
+    <form id="formulario">
+      <div>
+        <label for="id">Id</label>
+        <input type="text" id="id">
+      </div>
+      <div>
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre">
+      </div>
+      <div>
+        <label for="correo">Correo</label>
+        <input type="text" id="correo">
+      </div>
+      <div>
+        <label for="ciudad">Ciudad</label>
+        <input type="text" id="ciudad">
+      </div>
+      <button type="submit" id="boton">Agregar</button>
+    </form>
+
+    <!-- Buscador -->
+    <label for="buscador">Buscar por nombre</label>
+    <input type="text" id="buscador" placeholder="Escribe un nombre...">
+
+    <!-- Tabla (el tbody lo llena JavaScript) -->
+    <div class="tabla-contenedor">
+      <table>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Ciudad</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tabla"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

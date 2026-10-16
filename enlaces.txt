@@ -1,0 +1,4 @@
+Actividad 1 - Panel de Gestión de Usuarios
+
+Repositorio (GitHub): PEGA_AQUI_EL_LINK
+Despliegue (GitHub Pages / Netlify / Vercel): PEGA_AQUI_EL_LINK
