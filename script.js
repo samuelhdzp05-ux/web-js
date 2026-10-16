@@ -1,4 +1,6 @@
-// Referencias al DOM 
+// Samuel Hernández y Diego Tovar
+
+// Selección de elementos del DOM necesarios para la interfaz
 const formulario = document.getElementById("formulario");
 const buscador = document.getElementById("buscador");
 const tabla = document.getElementById("tabla");
@@ -6,26 +8,22 @@ const mensaje = document.getElementById("mensaje");
 const boton = document.getElementById("boton");
 const campoId = document.getElementById("id");
 
-// Array de usuarios (objetos { id, nombre, correo, ciudad })
+// Variables de estado para almacenar los usuarios y el ID del registro en edición
 let usuarios = [];
-
-// Id del usuario que se está editando (null si se está agregando)
 let idEditando = null;
 
-// Mensajes 
+// Función para mostrar mensajes informativos o de error en pantalla
 const mostrarMensaje = (texto) => {
   mensaje.textContent = texto;
 };
 
-// Dibujar la tabla con la lista recibida 
+// Función para renderizar y actualizar dinámicamente las filas de la tabla con los usuarios
 const dibujarTabla = (lista) => {
   tabla.innerHTML = "";
 
   lista.forEach((usuario) => {
-    // Destructuring para extraer los campos
     const { id, nombre, correo, ciudad } = usuario;
 
-    // Template string para armar la fila
     tabla.innerHTML += `
       <tr>
         <td>${id}</td>
@@ -40,14 +38,14 @@ const dibujarTabla = (lista) => {
   });
 };
 
-// Se llama cada vez que cambia la lista: imprime en consola y redibuja
+// Función para actualizar la vista de la tabla y ejecutar los conteos en consola
 const actualizarLista = () => {
   console.log(JSON.stringify(usuarios));
   dibujarTabla(usuarios);
   contarPorCiudad();
 };
 
-//  Bucle: cuenta cuántos usuarios hay por ciudad (se muestra en consola) 
+// Función para calcular y mostrar en consola cuántos usuarios hay por cada ciudad
 const contarPorCiudad = () => {
   const conteo = {};
   for (const { ciudad } of usuarios) {
@@ -56,14 +54,13 @@ const contarPorCiudad = () => {
   console.log("Usuarios por ciudad:", conteo);
 };
 
-//  Cargar usuarios desde la API
+// Función asíncrona para obtener los usuarios iniciales desde la API pública
 const cargarUsuarios = async () => {
   mostrarMensaje("Cargando...");
   try {
     const res = await fetch("https://jsonplaceholder.typicode.com/users");
     const datos = await res.json();
 
-    // map: nos quedamos solo con los campos que necesitamos
     usuarios = datos.map((u) => ({
       id: u.id,
       nombre: u.name,
@@ -78,17 +75,16 @@ const cargarUsuarios = async () => {
   }
 };
 
-//  Validar el formulario: devuelve un código de resultado 
+// Función para validar que los datos ingresados en el formulario sean correctos
 const validar = ({ id, nombre, correo, ciudad }) => {
   if (id === "" || nombre === "" || correo === "" || ciudad === "") return "vacio";
   if (isNaN(id)) return "idNoNumero";
   if (!correo.includes("@")) return "correoInvalido";
-  // Al agregar, el id no debe existir (incluye los de la API)
   if (idEditando === null && usuarios.some((u) => u.id === Number(id))) return "idRepetido";
   return "ok";
 };
 
-//  Enviar formulario (agregar o modificar) 
+// Evento para manejar el envío del formulario (tanto para agregar como para modificar usuarios)
 formulario.addEventListener("submit", (event) => {
   event.preventDefault();
 
@@ -99,7 +95,6 @@ formulario.addEventListener("submit", (event) => {
     ciudad: document.getElementById("ciudad").value.trim(),
   };
 
-  // Elegimos el mensaje según el resultado de la validación
   const resultado = validar(datos);
   switch (resultado) {
     case "vacio":
@@ -118,48 +113,59 @@ formulario.addEventListener("submit", (event) => {
 
   const usuario = { ...datos, id: Number(datos.id) };
 
+  // Condicional para saber si se está creando un usuario nuevo o editando uno existente
   if (idEditando === null) {
     usuarios.push(usuario);
     mostrarMensaje(`Usuario ${usuario.nombre} agregado.`);
   } else {
-    // Buscamos el usuario por su id y lo reemplazamos
     const posicion = usuarios.findIndex((u) => u.id === idEditando);
-    usuarios[posicion] = usuario;
-    mostrarMensaje(`Usuario ${usuario.nombre} modificado.`);
+    const usuarioActual = usuarios[posicion];
+
+    // Validación extra para comprobar si los datos se mantuvieron iguales al editar
+    if (
+      usuarioActual.nombre === usuario.nombre &&
+      usuarioActual.correo === usuario.correo &&
+      usuarioActual.ciudad === usuario.ciudad
+    ) {
+      mostrarMensaje("No se realizaron cambios en el usuario.");
+    } else {
+      usuarios[posicion] = usuario;
+      mostrarMensaje(`Usuario ${usuario.nombre} modificado.`);
+    }
   }
 
-  // Limpiar formulario y volver al modo "Agregar"
   formulario.reset();
   campoId.disabled = false;
-  boton.textContent = "Agregar";
-  idEditando = null;
+  boton.textContent = "REGISTRAR";
 
   buscador.value = "";
   actualizarLista();
 });
 
-// Búsqueda en vivo con filter (no modifica el array original) 
+// Evento para filtrar los usuarios en tiempo real según el texto ingresado en el buscador
 buscador.addEventListener("input", () => {
   const texto = buscador.value.toLowerCase();
   const filtrados = usuarios.filter((u) => u.nombre.toLowerCase().includes(texto));
   dibujarTabla(filtrados);
 });
 
-//  Editar y Eliminar (delegación de eventos sobre el tbody) 
+// Evento para capturar los clics en la tabla y determinar si se desea editar o eliminar un usuario
 tabla.addEventListener("click", (event) => {
   const id = Number(event.target.dataset.id);
 
+  // Lógica para cargar los datos en el formulario al presionar el botón "Editar"
   if (event.target.classList.contains("editar")) {
     const { nombre, correo, ciudad } = usuarios.find((u) => u.id === id);
     campoId.value = id;
     document.getElementById("nombre").value = nombre;
     document.getElementById("correo").value = correo;
     document.getElementById("ciudad").value = ciudad;
-    campoId.disabled = true; // el id no se puede cambiar
+    campoId.disabled = true;
     boton.textContent = "Guardar cambios";
     idEditando = id;
   }
 
+  // Lógica para confirmar y eliminar un usuario al presionar el botón "Eliminar"
   if (event.target.classList.contains("eliminar")) {
     if (confirm("¿Seguro que quieres eliminar este usuario?")) {
       usuarios = usuarios.filter((u) => u.id !== id);
@@ -169,5 +175,5 @@ tabla.addEventListener("click", (event) => {
   }
 });
 
-//  Inicio 
+// Llamada inicial para cargar los usuarios al abrir la página
 cargarUsuarios();
